@@ -1,0 +1,26 @@
+## Interface: 120005
+## Title: Voidcore Advisor
+## Notes: Recommends best Nebulous Voidcore bonus roll spends per spec, content, and difficulty.
+## Author: jakealagel
+## Version: 0.1.0
+## SavedVariables: VoidcoreAdvisorDB
+## SavedVariablesPerCharacter: VoidcoreAdvisorCharDB
+## IconTexture: Interface\Icons\inv_misc_voidcore
+
+# Data
+Data\Items.lua
+Data\Recommendations.lua
+Data\Sources.lua
+
+# Modules
+Modules\Tracker.lua
+Modules\Detector.lua
+Modules\Advisor.lua
+
+# UI
+UI\BonusRollPopup.lua
+UI\MainFrame.lua
+UI\MinimapButton.lua
+
+# Core (loads last so it can wire up modules)
+Core.lua
