@@ -10,7 +10,9 @@
 
 ## What it does
 
-Patch 12.0.5 introduced the **Voidforge Bonus Roll** system. After completing eligible content (Mythic raid bosses, Mythic+ dungeons, Bountiful Delves, Nightmare Prey Hunts), you can spend Nebulous Voidcores — earned from Decimus in exchange for gold, Voidlight Marl, or Veteran Dawncrest — to roll on a bonus item from that activity's loot pool. Raid bonus rolls cost **2 cores**; everything else costs **1**.
+Patch 12.0.5 introduced the **Voidforge Bonus Roll** system. After completing eligible content, you can spend Nebulous Voidcores — earned from Decimus in exchange for gold, Voidlight Marl, or Veteran Dawncrest — to roll on a bonus item from that activity's loot pool. Raid bonus rolls cost **2 cores**; Mythic+ rolls cost **1**.
+
+This addon focuses on **raid + Mythic+** content only. Bountiful Delves and Nightmare Prey Hunts also support Voidcore rolls in-game but are intentionally out of scope here — recommendations from those pools tend to be filler relative to high-end raid/M+ pieces, and the BiS guides agree.
 
 The catch: **Voidcores are limited.** Your weekly cap grows by two per week and the season is finite. Spending them on filler when a chase item is one boss away is a pure resource leak.
 
@@ -23,7 +25,7 @@ The catch: **Voidcores are limited.** Your weekly cap grows by two per week and 
 ## Features
 
 ### Live decision support
-- **ROLL / SKIP popup** appears automatically when you complete eligible content (Mythic raid kills, M+10 and above, Bountiful Delves, Nightmare Prey Hunts).
+- **ROLL / SKIP popup** appears automatically when you complete eligible content (Mythic raid kills + Mythic+10 and above).
 - Heroic raid recommendations are off by default — toggle with `/voidcore heroic` for trinket edge cases.
 - Recommendation accounts for what you already own, so the popup never tells you to chase a piece sitting in your bank.
 
@@ -213,12 +215,74 @@ These are known gaps that don't block normal use but limit accuracy until resolv
 
 ## Contributing
 
-This is an early-stage personal project. If you're playing Midnight and have:
-- A confirmed Nebulous Voidcore currency ID
-- Devourer DH spec ID
-- Source data (which boss drops which item) for Manaforge Omega or any Season 1 dungeon
+Pull requests are welcome — especially for live data the maintainer can't easily verify (boss/dungeon source mappings, datamined IDs, BiS updates after balance patches).
 
-…open an issue or PR with the data and it'll get rolled in fast.
+### What we're looking for right now
+
+- **Source mappings for `Data/Sources.lua`** — which boss in Manaforge Omega drops which item, on which difficulty, and the same for each Season 1 M+ dungeon. The cleanest path is running [`scripts/dump_sources.lua`](scripts/dump_sources.lua) in-game (just needs the instance IDs filled in first) and pasting the output.
+- **Confirmed Wowhead item ID corrections** if any of the 50 in [`Data/Items.lua`](Data/Items.lua) turn out to be wrong in-game (the loot event handler will silently skip mismatched IDs, so this manifests as "I picked up the item but it didn't get marked collected").
+- **BiS list updates** in [`Data/Recommendations.lua`](Data/Recommendations.lua) when class guide writers update their rankings. Cite the source.
+- **The unresolved issues** listed above — fixes for any of them are high-value.
+
+### Workflow
+
+`main` is protected. All changes (except those by the maintainer) go through pull requests with one approving review. Linear history is required, so PR merges are squash or rebase only — no merge commits.
+
+**If you've been added as a collaborator** (you have direct write access to the repo):
+
+```bash
+git clone https://github.com/jalagel20/voidcore-advisor.git
+cd voidcore-advisor
+git checkout -b your-feature-name
+# ...make changes...
+git commit -am "Describe what changed and why"
+git push -u origin your-feature-name
+gh pr create --base main --head your-feature-name --title "..." --body "..."
+```
+
+**If you're not a collaborator** (default for the public — you can read but not push to this repo): you must work from a fork.
+
+```bash
+# 1. Fork via the GitHub UI, or:
+gh repo fork jalagel20/voidcore-advisor --clone
+cd voidcore-advisor
+
+# 2. Branch and commit on your fork
+git checkout -b your-feature-name
+# ...make changes...
+git commit -am "Describe what changed and why"
+git push -u origin your-feature-name
+
+# 3. Open a PR back to the upstream repo
+gh pr create --repo jalagel20/voidcore-advisor --base main \
+  --head <your-username>:your-feature-name --title "..." --body "..."
+```
+
+Either way: never push directly to `main`. The remote will reject it for non-admins.
+
+### What gets your PR merged
+
+1. CI (none today — this is a planned addition)
+2. **One approving review** from the maintainer
+3. **All PR conversation threads resolved** (use the "Resolve" button on each suggestion)
+4. The branch is **up to date with `main`** so the merge is linear (squash or rebase your commits if needed)
+
+### Style notes
+
+- Lua: 4-space indent, no semicolons, descriptive names, `local _, VA = ...` pattern at the top of every module file.
+- One feature per PR. A small, focused PR is reviewed in minutes; a 12-file refactor sits.
+- Commit messages should explain *why*, not just *what*. The diff already shows what.
+- If you change a file under `Data/`, mention the source (Wowhead URL, in-game `/dump` output, datamine link) in the PR description.
+
+### Reporting bugs
+
+Open an issue with:
+- Your character class + spec
+- What you did (e.g. "killed Mythic Chimaerus, spent 2 Voidcores")
+- What the addon said vs. what actually happened
+- The output of `/voidcore log` if relevant
+
+Screenshots of the popup or main panel are gold — they make reproducing the issue trivial.
 
 ---
 
