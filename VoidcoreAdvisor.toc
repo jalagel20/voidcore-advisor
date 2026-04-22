@@ -13,6 +13,7 @@ Data\Recommendations.lua
 Data\Sources.lua
 
 # Modules
+Modules\SpendLog.lua
 Modules\Tracker.lua
 Modules\Detector.lua
 Modules\Advisor.lua

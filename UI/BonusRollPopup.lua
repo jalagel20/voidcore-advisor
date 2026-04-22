@@ -54,12 +54,22 @@ end
 
 function Popup:Show(contentType, ctx)
     self.frame = self.frame or buildFrame()
-    local should, reason, top = VA.Advisor:ShouldRoll(contentType, ctx and ctx.difficulty)
+    local should, reason, top, meta = VA.Advisor:ShouldRoll(contentType, ctx and ctx.difficulty)
     local color = should and "|cff00ff66" or "|cffff5050"
     self.frame.verdict:SetText(color .. (should and "ROLL" or "SKIP") .. "|r")
-    self.frame.detail:SetText(reason or "")
+
+    -- Build a detail line plus an optional attempt-history footnote.
+    local detail = reason or ""
+    if VA.SpendLog and ctx then
+        local contextID = ctx.encounterID or ctx.mapID
+        local rolls, hits = VA.SpendLog:GetContextStats(contentType, ctx.difficulty, contextID)
+        if rolls > 0 then
+            detail = detail .. ("\n|cff888888history: %d prior roll%s here, %d tracked drop%s|r"):format(
+                rolls, rolls == 1 and "" or "s", hits, hits == 1 and "" or "s")
+        end
+    end
+    self.frame.detail:SetText(detail)
     self.frame:Show()
-    -- auto-hide after 20s if user ignores
     if self.timer then self.timer:Cancel() end
     self.timer = C_Timer.NewTimer(20, function() self.frame:Hide() end)
 end

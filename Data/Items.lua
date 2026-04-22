@@ -1,75 +1,75 @@
 -- Voidcore Advisor: Item ID lookup and metadata
--- Populated incrementally; resolves item names from Recommendations.lua to itemIDs.
+-- Source: scraped from Wowhead "Best Voidforge Bonus Roll Gear" article (Midnight 12.0.5).
 --
 -- Schema:
 --   VA.Items[itemName] = {
---     id = <itemID>,
---     icon = <fileID or texture path>,  -- optional, GetItemIcon(id) at runtime is fine
---     slot = <"trinket"|"weapon"|"head"|...>,  -- for slot-based filtering / display
---     stats = { "haste", "crit" },     -- optional, future use for secondary-stat filtering
+--     id   = <itemID>,              -- Wowhead item ID (used for tooltips, icon, link)
+--     slot = <"trinket"|"weapon"|...>,
 --   }
---
--- TODO: Populate from Wowhead. Items left empty here will fall back to name-only display.
 
 local _, VA = ...
 VA.Items = {
-    -- Universal trinket / signature item across most specs
-    ["Gaze of the Alnseer"] = { id = nil, slot = "trinket" },
-
     -- Trinkets
-    ["Algeth'ar Puzzle Box"]      = { id = nil, slot = "trinket" },
-    ["Vaelgor's Final Stare"]     = { id = nil, slot = "trinket" },
-    ["Soulcatcher's Charm"]       = { id = nil, slot = "trinket" },
-    ["Lightless Lament"]          = { id = nil, slot = "trinket" },
-    ["Eye of Midnight"]           = { id = nil, slot = "trinket" },
-    ["Heart of Wind"]             = { id = nil, slot = "trinket" },
-    ["Heart of Ancient Hunger"]   = { id = nil, slot = "trinket" },
-    ["Ampoule of Pure Void"]      = { id = nil, slot = "trinket" },
-    ["Corespark Multitool"]       = { id = nil, slot = "trinket" },
+    ["Gaze of the Alnseer"]         = { id = 249343, slot = "trinket" },
+    ["Algeth'ar Puzzle Box"]        = { id = 193701, slot = "trinket" },
+    ["Vaelgor's Final Stare"]       = { id = 249346, slot = "trinket" },
+    ["Soulcatcher's Charm"]         = { id = 250223, slot = "trinket" },
+    ["Lightless Lament"]            = { id = 260408, slot = "trinket" },
+    ["Eye of Midnight"]             = { id = 249920, slot = "trinket" },
+    ["Heart of Wind"]               = { id = 250256, slot = "trinket" },
+    ["Heart of Ancient Hunger"]     = { id = 249342, slot = "trinket" },
+    ["Ampoule of Pure Void"]        = { id = 151312, slot = "trinket" },
+    ["Corespark Multitool"]         = { id = 251201, slot = "trinket" },
 
     -- Weapons
-    ["Bellamy's Final Judgement"]      = { id = nil, slot = "weapon" },
-    ["Light Company Guidon"]           = { id = nil, slot = "weapon" },
-    ["Spellboon Saber"]                = { id = nil, slot = "weapon" },
-    ["Alnscorned Spire"]               = { id = nil, slot = "weapon" },
-    ["Ceremonial Hexblade"]            = { id = nil, slot = "weapon" },
-    ["Frenzy's Rebuke"]                = { id = nil, slot = "weapon" },
-    ["Deceiver's Rotbow"]              = { id = nil, slot = "weapon" },
-    ["Ranger-Captain's Lethal Recurve"]= { id = nil, slot = "weapon" },
-    ["Radiant Slicer"]                 = { id = nil, slot = "weapon" },
-    ["Emberwing Feather"]              = { id = nil, slot = "weapon" },
-    ["Traitor's Talon"]                = { id = nil, slot = "weapon" },
-    ["Krick's Beetle Stabber"]         = { id = nil, slot = "weapon" },
-    ["Splitshroud Stinger"]            = { id = nil, slot = "weapon" },
-    ["Ward of the Spellbreaker"]       = { id = nil, slot = "shield" },
-    ["Garfrost's Two-Ton Hammer"]      = { id = nil, slot = "weapon" },
-    ["Whirling Voidcleaver"]           = { id = nil, slot = "weapon" },
-    ["Turalyon's False Echo"]          = { id = nil, slot = "weapon" },
+    ["Bellamy's Final Judgement"]       = { id = 249277, slot = "weapon" },
+    ["Light Company Guidon"]            = { id = 249344, slot = "weapon" },
+    ["Spellboon Saber"]                 = { id = 193710, slot = "weapon" },
+    ["Alnscorned Spire"]                = { id = 249278, slot = "weapon" },
+    ["Ceremonial Hexblade"]             = { id = 251178, slot = "weapon" },
+    ["Frenzy's Rebuke"]                 = { id = 249317, slot = "weapon" },
+    ["Deceiver's Rotbow"]               = { id = 251174, slot = "weapon" },
+    ["Ranger-Captain's Lethal Recurve"] = { id = 249288, slot = "weapon" },
+    ["Radiant Slicer"]                  = { id = 251212, slot = "weapon" },
+    ["Emberwing Feather"]               = { id = 250144, slot = "weapon" },
+    ["Traitor's Talon"]                 = { id = 251162, slot = "weapon" },
+    ["Krick's Beetle Stabber"]          = { id = 49807,  slot = "weapon" }, -- alt ID 133491 seen in Outlaw entry
+    ["Splitshroud Stinger"]             = { id = 251111, slot = "weapon" },
+    ["Ward of the Spellbreaker"]        = { id = 251105, slot = "shield" },
+    ["Garfrost's Two-Ton Hammer"]       = { id = 49802,  slot = "weapon" },
+    ["Whirling Voidcleaver"]            = { id = 251117, slot = "weapon" },
+    ["Turalyon's False Echo"]           = { id = 249295, slot = "weapon" },
 
     -- Armor
-    ["Voidclaw Gauntlets"]             = { id = nil, slot = "hands" },
-    ["Shifting Stalker Hide Pants"]    = { id = nil, slot = "legs" },
-    ["Blooming Barklight Spaulders"]   = { id = nil, slot = "shoulders" },
-    ["Scabrous Zombie Belt"]           = { id = nil, slot = "waist" },
-    ["Scornbane Waistguard"]           = { id = nil, slot = "waist" },
-    ["Scorn-Scarred Shul'ka's Belt"]   = { id = nil, slot = "waist" },
-    ["Flayer's Black Belt"]            = { id = nil, slot = "waist" },
-    ["Thalassian Dawnguard"]           = { id = nil, slot = "head" },
-    ["Radiant Plume"]                  = { id = nil, slot = "head" },
+    ["Voidclaw Gauntlets"]              = { id = 151332, slot = "hands" },
+    ["Shifting Stalker Hide Pants"]     = { id = 151314, slot = "legs" },
+    ["Blooming Barklight Spaulders"]    = { id = 249333, slot = "shoulders" },
+    ["Scabrous Zombie Belt"]            = { id = 49810,  slot = "waist" },
+    ["Scornbane Waistguard"]            = { id = 249371, slot = "waist" },
+    ["Scorn-Scarred Shul'ka's Belt"]    = { id = 249374, slot = "waist" },
+    ["Flayer's Black Belt"]             = { id = 49806,  slot = "waist" },
+    ["Thalassian Dawnguard"]            = { id = 249921, slot = "head" },
+    ["Radiant Plume"]                   = { id = 249806, slot = "head" },
+    ["Blazing Sunclaws"]                = { id = 258438, slot = "hands" },
 
-    -- Necks / Rings / Cloaks / Misc
-    ["Eternal Voidsong Chain"]   = { id = nil, slot = "neck" },
-    ["Barbed Ymirheim Choker"]   = { id = nil, slot = "neck" },
-    ["Amulet of the Abyssal Hymn"] = { id = nil, slot = "neck" },
-    ["Platinum Star Band"]       = { id = nil, slot = "finger" },
-    ["Purloined Wedding Ring"]   = { id = nil, slot = "finger" },
-    ["Alncured Riftbloom"]       = { id = nil, slot = "finger" },
-    ["Locus-Walker's Ribbon"]    = { id = nil, slot = "back" },
-    ["Umbral Plume"]             = { id = nil, slot = "back" },
-    ["Occlusion of Void"]        = { id = nil, slot = "offhand" },
-    ["Omission of Light"]        = { id = nil, slot = "offhand" },
-    ["Litany of Lightblind Wrath"] = { id = nil, slot = "offhand" },
-    ["Grimoire of the Eternal Light"] = { id = nil, slot = "offhand" },
-    ["Light of the Cosmic Crescendo"] = { id = nil, slot = "offhand" },
-    ["Blazing Sunclaws"]         = { id = nil, slot = "hands" },
+    -- Necks / Rings / Cloaks / Offhands
+    ["Eternal Voidsong Chain"]          = { id = 249368, slot = "neck" },
+    ["Barbed Ymirheim Choker"]          = { id = 50228,  slot = "neck" },
+    ["Amulet of the Abyssal Hymn"]      = { id = 250247, slot = "neck" },
+    ["Platinum Star Band"]              = { id = 193708, slot = "finger" },
+    ["Purloined Wedding Ring"]          = { id = 49812,  slot = "finger" },
+    ["Alncured Riftbloom"]              = { id = 249348, slot = "finger" },
+    ["Locus-Walker's Ribbon"]           = { id = 249809, slot = "back" },
+    ["Umbral Plume"]                    = { id = 260235, slot = "back" },
+    ["Occlusion of Void"]               = { id = 251217, slot = "offhand" },
+    ["Omission of Light"]               = { id = 251093, slot = "offhand" },
+    ["Litany of Lightblind Wrath"]      = { id = 249808, slot = "offhand" },
+    ["Grimoire of the Eternal Light"]   = { id = 249276, slot = "offhand" },
+    ["Light of the Cosmic Crescendo"]   = { id = 249811, slot = "offhand" },
 }
+
+-- Reverse lookup: itemID -> itemName (used by loot event parsing for faster match)
+VA.ItemsByID = {}
+for name, data in pairs(VA.Items) do
+    if data.id then VA.ItemsByID[data.id] = name end
+end
