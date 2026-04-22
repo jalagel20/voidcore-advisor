@@ -45,7 +45,6 @@ VA.Recommendations[12] = {
         { rank = 2, items = { "Gaze of the Alnseer" } },
         { rank = 3, items = { "Occlusion of Void" } },
     },
-    -- Devourer (new Midnight spec) — spec ID TBD; placeholder key 0 to fill in
     [1480] = { -- Devourer
         { rank = 1, items = { "Gaze of the Alnseer" } },
         { rank = 2, items = { "Vaelgor's Final Stare" } },
